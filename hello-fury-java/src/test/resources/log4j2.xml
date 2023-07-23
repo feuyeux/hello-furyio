@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration>
+    <!--用来自定义一些变量-->
+    <Properties>
+        <!--变量定义-->
+        <Property name="myPattern" value="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+    </Properties>
+    <Appenders>
+        <Console name="ConsoleAppend" target="SYSTEM_OUT">
+            <PatternLayout pattern="${myPattern}"/>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="ConsoleAppend"/>
+        </Root>
+    </Loggers>
+</Configuration>
