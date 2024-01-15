@@ -11,6 +11,9 @@
         </Console>
     </Appenders>
     <Loggers>
+        <Logger name="io.fury" level="ERROR" additivity="false">
+            <AppenderRef ref="ConsoleAppend"/>
+        </Logger>
         <Root level="INFO">
             <AppenderRef ref="ConsoleAppend"/>
         </Root>
