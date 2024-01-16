@@ -91,7 +91,8 @@ public class DTOTest {
             UserDTO dDto = (UserDTO) fury.deserialize(bs);
             long t3 = System.currentTimeMillis();
             assertEquals(dto, dDto);
-            log.info("elapsed[{}]: serialize={}ms, deserialize={}ms", bs.length, t2 - t1, t3 - t2);
+            log.info("elapsed[{} {},{}]: serialize={}ms, deserialize={}ms",
+                    bs.length, dto.hashCode(), dDto.hashCode(), t2 - t1, t3 - t2);
         }
     }
 }
