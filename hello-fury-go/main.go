@@ -1,6 +1,7 @@
 package main
 
-import furygo "github.com/alipay/fury/fury/go/fury"
+//import furygo "github.com/alipay/fury/fury/go/fury"
+import furygo "github.com/apache/incubator-fury/go/fury"
 import "fmt"
 
 func main() {

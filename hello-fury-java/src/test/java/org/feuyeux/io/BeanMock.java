@@ -7,11 +7,11 @@ import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
+import java.lang.reflect.Type;
+import java.util.*;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class BeanMock {
 
   private static int mockDepth = 0;
@@ -67,9 +67,22 @@ public class BeanMock {
           writeMethod.invoke(object, (short) (new Random().nextInt(65535) - 32768));
         } else if (writeType.equals(String.class)) {
           writeMethod.invoke(object, UUID.randomUUID().toString() + new Random().nextLong());
+        } else if (Collection.class.isAssignableFrom(writeType)) {
+          Type[] genericParameterTypes = writeMethod.getGenericParameterTypes();
+          Type genericParameterType = genericParameterTypes[0];
+          String typeName = genericParameterType.getTypeName();
+          if (typeName.equals("java.util.List<java.lang.String>")) {
+            List<String> list = new ArrayList<>();
+            for (int i = 0; i < 10_000; i++) {
+              list.add(UUID.randomUUID().toString() + new Random().nextLong());
+            }
+            writeMethod.invoke(object, list);
+          } else {
+            // TODO
+            log.debug("TODO");
+          }
         } else if (writeType.isEnum()
             || writeType.isArray()
-            || Collection.class.isAssignableFrom(writeType)
             || Map.class.isAssignableFrom(writeType)) {
           continue;
         } else {
@@ -86,7 +99,7 @@ public class BeanMock {
     try {
       beanInfo = Introspector.getBeanInfo(beanClass);
     } catch (IntrospectionException e) {
-      e.printStackTrace();
+      log.error("getPropertyDescriptors failed", e);
     }
     if (null == beanInfo) return null;
     return beanInfo.getPropertyDescriptors();
