@@ -1,22 +1,29 @@
-# Hello FuryIO(javascript)
+# Hello Fury (JavaScript)
 
-<https://www.npmjs.com/package/@furyjs/fury>
+This example demonstrates using Apache Fury with JavaScript.
 
-prepare
+## Prerequisites
 
-```sh
+- Node.js 14+
+- npm 6+
+
+## Setup Instructions
+
+```bash
+# Optional: Set npm registry if needed
 npm config set registry https://registry.npmmirror.com
-npm config get registry
-```
 
-```sh
-npm init
-```
-
-```sh
+# Install dependencies
 npm install
 ```
 
-```s
-node --experimental-modules main.js
+## Run Instructions
+
+```bash
+# Run the example
+node main.js
 ```
+
+## Package Information
+
+- NPM Package: [@furyjs/fury](https://www.npmjs.com/package/@furyjs/fury)

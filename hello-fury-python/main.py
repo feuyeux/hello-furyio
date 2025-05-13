@@ -9,7 +9,7 @@ class SomeClass:
     f3: Dict[str, str]
 
 fury = pyfury.Fury(ref_tracking=True)
-fury.register_class(SomeClass, type_tag="example.SomeClass")
+fury.register_type(SomeClass)
 obj = SomeClass()
 obj.f2 = {"k1": "v1", "k2": "v2"}
 obj.f1, obj.f3 = obj, obj.f2

@@ -1,20 +1,45 @@
-# Hello Fury(golang)
+# Hello Fury (Go)
 
-init
+This example demonstrates using Apache Fury with Go.
+
+## Prerequisites
+
+- Go 1.16+
+
+## Setup Instructions
+
+> ⚠️ If this is your first time cloning the repo, run the following to initialize the module:
+>
+> ```bash
+> go mod init hello-fury-go
+> ```
+>
+> Otherwise, skip this step.
 
 ```bash
-$ go mod init hello-fury
-go: creating new go.mod: module hello-fury
-go: to add module requirements and sums:
-        go mod tidy
-
-$ go mod tidy
-go: finding module for package github.com/alipay/fury/fury/go/fury
-go: downloading github.com/alipay/fury v0.0.0-20230723031349-9ce8bfdeeb82
+# Download dependencies
+go mod tidy
 ```
 
-run
+## Build Instructions
 
-```sh
+```bash
+# Build the executable
+go build -o hello_fury
+```
+
+## Run Instructions
+
+```bash
+# Run without building
 go run main.go
+
+# Or run the built executable
+./hello_fury
+```
+
+## Run Tests
+
+```bash
+go test
 ```

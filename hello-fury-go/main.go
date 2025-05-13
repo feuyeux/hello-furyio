@@ -1,29 +1,66 @@
 package main
 
-//import furygo "github.com/alipay/fury/fury/go/fury"
-import furygo "github.com/apache/incubator-fury/go/fury"
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"path/filepath"
+
+	fury "github.com/apache/fury/go/fury"
+)
+
+type UserInfo struct {
+	UserId     int64
+	Name       string
+	Age        int32
+	Emails     []string
+	Properties map[string]string
+	Scores     []int32
+	Active     bool
+	CreatedAt  int64
+	Avatar     []byte
+}
+
+func createSampleUserInfo() *UserInfo {
+	return &UserInfo{
+		UserId:     12345,
+		Name:       "John Doe",
+		Age:        30,
+		Emails:     []string{"john.doe@example.com", "johndoe@gmail.com"},
+		Properties: map[string]string{"city": "San Francisco", "country": "USA", "role": "Developer"},
+		Scores:     []int32{85, 90, 78, 92},
+		Active:     true,
+		CreatedAt:  1747130612,
+		Avatar:     []byte{0, 1, 2, 3, 4, 5},
+	}
+}
 
 func main() {
-	type SomeClass struct {
-		F1 *SomeClass
-		F2 map[string]string
-		F3 map[string]string
-	}
-	fury := furygo.NewFury(true)
-	if err := fury.RegisterTagType("example.SomeClass", SomeClass{}); err != nil {
-		panic(err)
-	}
-	value := &SomeClass{F2: map[string]string{"k1": "v1", "k2": "v2"}}
-	value.F3 = value.F2
-	value.F1 = value
-	bytes, err := fury.Marshal(value)
+	fmt.Println("Go Fury Implementation (v0.10.2)")
+	user := createSampleUserInfo()
+	fmt.Printf("Created user: %+v\n", user)
+
+	outputDir := "../hello-fury-io"
+	os.MkdirAll(outputDir, 0755)
+	outputFile := filepath.Join(outputDir, "userinfo_go.fury")
+
+	// Create Fury instance
+	f := fury.NewFury(true)
+	f.RegisterTagType("org.feuyeux.fury.UserInfo", UserInfo{})
+
+	// Serialize
+	data, err := f.Marshal(user)
 	if err != nil {
+		fmt.Printf("Failed to serialize: %v\n", err)
+		os.Exit(1)
 	}
-	var newValue interface{}
-	// bytes can be data serialized by other languages.
-	if err := fury.Unmarshal(bytes, &newValue); err != nil {
-		panic(err)
+	os.WriteFile(outputFile, data, 0644)
+	fmt.Printf("User information serialized to %s\n", outputFile)
+
+	// Deserialize
+	var user2 UserInfo
+	if err := f.Unmarshal(data, &user2); err != nil {
+		fmt.Printf("Failed to deserialize: %v\n", err)
+		os.Exit(1)
 	}
-	fmt.Println(newValue)
+	fmt.Printf("Deserialized user: %+v\n", user2)
 }

@@ -1,20 +1,42 @@
-# Hello FuryIO(python)
+# Hello Fury (Python)
 
-<https://pypi.org/project/pyfury/>
+This example demonstrates using Apache Fury with Python.
 
-prepare
+## Prerequisites
 
-```sh
-$ virtualenv venv -p python3.10
-$ source ./venv/bin/activate
-$ python3 --version
-$ pip3 install --upgrade pip && pip3 --version
-#$ pip3 freeze > requirements.txt
-$ pip3 install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+- Python 3.8+
+
+## Setup Instructions
+
+### Recommended: Using [uv](https://github.com/astral-sh/uv) (if installed)
+
+```bash
+# Install uv if not already installed
+brew install uv  # or see uv docs for other OS
+
+# Create and activate a virtual environment
+uv venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+
+# Install dependencies
+uv pip install -r requirements.txt
 ```
 
-run
+### Or: Standard Python venv + pip
 
-```sh
-python3 main.py
+```bash
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+pip install -r requirements.txt
 ```
+
+## Run Instructions
+
+```bash
+python main.py
+```
+
+## Package Information
+
+- PyPI Package: [pyfury](https://pypi.org/project/pyfury/)
+- Current version in requirements.txt: pyfury>=0.4.1
