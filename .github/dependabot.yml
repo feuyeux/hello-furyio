@@ -9,19 +9,20 @@ updates:
     directory: "hello-fury-java"
     schedule:
       interval: "daily"
+    rebase-strategy: "auto"
   - package-ecosystem: "npm"
     directory: "hello-fury-javascript"
     schedule:
       interval: "daily"
+    rebase-strategy: "auto"
   - package-ecosystem: "pip"
     directory: "hello-fury-python"
     schedule:
       interval: "daily"
+    rebase-strategy: "auto"
   - package-ecosystem: "gomod"
     directory: "hello-fury-go"
     schedule:
       interval: "daily"
-  - package-ecosystem: "cmake"
-    directory: "hello-fury-cpp"
-    schedule:
-      interval: "daily"
+    rebase-strategy: "auto"
+
