@@ -1,0 +1,16 @@
+{
+  "name": "hello-fory-javascript",
+  "version": "1.0.0",
+  "description": "Hello fory example for JavaScript",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@foryjs/fory": "^0.5.9-beta"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

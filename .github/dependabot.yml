@@ -6,22 +6,22 @@
 version: 2
 updates:
   - package-ecosystem: "maven"
-    directory: "hello-fury-java"
+    directory: "hello-fory-java"
     schedule:
       interval: "daily"
     rebase-strategy: "auto"
   - package-ecosystem: "npm"
-    directory: "hello-fury-javascript"
+    directory: "hello-fory-javascript"
     schedule:
       interval: "daily"
     rebase-strategy: "auto"
   - package-ecosystem: "pip"
-    directory: "hello-fury-python"
+    directory: "hello-fory-python"
     schedule:
       interval: "daily"
     rebase-strategy: "auto"
   - package-ecosystem: "gomod"
-    directory: "hello-fury-go"
+    directory: "hello-fory-go"
     schedule:
       interval: "daily"
     rebase-strategy: "auto"
