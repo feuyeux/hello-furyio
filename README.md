@@ -1,4 +1,4 @@
-# Hello Fury
+# Hello Fory
 
 This repository contains examples of using Apache Fury serialization library in various programming languages.
 
@@ -11,6 +11,5 @@ This repository contains examples of using Apache Fury serialization library in 
 
 ## Reference
 
-<https://fury.apache.org/>
-
-https://github.com/apache/fury
+- <https://fory.apache.org>
+- [https://github.com/apache/fury](https://github.com/apache/fory)
