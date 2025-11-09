@@ -23,7 +23,7 @@
         <dependency>
             <groupId>org.apache.fory</groupId>
             <artifactId>fory-core</artifactId>
-            <version>0.10.2</version>
+            <version>0.13.1</version>
         </dependency>
 
         <dependency>
