@@ -7,15 +7,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import org.apache.fory.fory;
+import org.apache.fory.Fory;
 import org.apache.fory.config.CompatibleMode;
 import org.apache.fory.config.Language;
 
-/** Hello fory Java Example */
 public class App {
   public static void main(String[] args) throws IOException {
-    System.out.println("Java fory Implementation");
-
     // Create output directory if it doesn't exist
     Path outputDir = Paths.get("../hello-fory-io");
     Files.createDirectories(outputDir);
@@ -25,8 +22,8 @@ public class App {
     System.out.println("Created user: " + userInfo);
 
     // Create fory instance configured for cross-language compatibility
-    fory fory =
-        fory.builder()
+    Fory fory =
+            Fory.builder()
             .withLanguage(Language.JAVA)
             .withRefTracking(true)
             .withCompatibleMode(CompatibleMode.COMPATIBLE)
@@ -72,7 +69,7 @@ public class App {
     return info;
   }
 
-  private static void deserializeUser(fory fory, Path filePath) throws IOException {
+  private static void deserializeUser(Fory fory, Path filePath) throws IOException {
     byte[] serialized = Files.readAllBytes(filePath);
     UserInfo userInfo = (UserInfo) fory.deserialize(serialized);
     System.out.println("Deserialized user: " + userInfo);
