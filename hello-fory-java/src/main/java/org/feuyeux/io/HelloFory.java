@@ -1,34 +1,33 @@
 package org.feuyeux.io;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.fory.Fory;
-import org.apache.fory.config.CompatibleMode;
 import org.apache.fory.config.Language;
+import org.apache.fory.logging.LoggerFactory;
 
-public class App {
+@Slf4j
+public class HelloFory {
   public static void main(String[] args) throws IOException {
+    // Enable SLF4J logging for Fory (same as Fory uses internally)
+    LoggerFactory.useSlf4jLogging(true);
+
     // Create output directory if it doesn't exist
-    Path outputDir = Paths.get("../hello-fory-io");
+    Path outputDir = Paths.get("../workspace");
     Files.createDirectories(outputDir);
 
     // Create a sample UserInfo object
     UserInfo userInfo = createSampleUserInfo();
-    System.out.println("Created user: " + userInfo);
-
+    log.info("Created user: {}", userInfo);
     // Create fory instance configured for cross-language compatibility
-    Fory fory =
-            Fory.builder()
-            .withLanguage(Language.JAVA)
-            .withRefTracking(true)
-            .withCompatibleMode(CompatibleMode.COMPATIBLE)
-            .build();
-    fory.register(UserInfo.class, "org.feuyeux.fory.UserInfo");
+    Fory fory = Fory.builder().withLanguage(Language.XLANG).withRefTracking(true).build();
+    fory.register(UserInfo.class);
 
     // Serialize the user to bytes
     byte[] serialized = fory.serialize(userInfo);
@@ -36,15 +35,20 @@ public class App {
     // Write the serialized data to a file
     Path outputFile = outputDir.resolve("userinfo_java.fory");
     Files.write(outputFile, serialized);
-    System.out.println("User information serialized to " + outputFile);
+    log.info("Serialized to {}", outputFile);
 
     // Try to read serialized data from other languages
-    Path defaultFile = outputDir.resolve("userinfo.fory");
-    if (Files.exists(defaultFile)) {
-      System.out.println("Found serialized data from other language implementation.");
-      deserializeUser(fory, defaultFile);
-    } else {
-      System.out.println("No serialized data from other languages found yet.");
+    String[] langs = {"java", "go", "js", "python", "rust"};
+    for (String lang : langs) {
+      Path langFile = outputDir.resolve("userinfo_" + lang + ".fory");
+      if (Files.exists(langFile)) {
+        try {
+          UserInfo userInfoFromFile = deserializeUser(fory, langFile);
+          log.info("Deserialized [{}] user info from {}:{}", lang, langFile, userInfoFromFile);
+        } catch (Exception e) {
+          log.error("Failed to deserialize [{}]", lang, e);
+        }
+      }
     }
   }
 
@@ -69,9 +73,21 @@ public class App {
     return info;
   }
 
-  private static void deserializeUser(Fory fory, Path filePath) throws IOException {
+  private static UserInfo deserializeUser(Fory fory, Path filePath) throws IOException {
     byte[] serialized = Files.readAllBytes(filePath);
-    UserInfo userInfo = (UserInfo) fory.deserialize(serialized);
-    System.out.println("Deserialized user: " + userInfo);
+    return (UserInfo) fory.deserialize(serialized);
   }
+}
+
+@Data
+class UserInfo implements Serializable {
+  private Long userId;
+  private String name;
+  private Integer age;
+  private List<String> emails;
+  private Map<String, String> properties;
+  private List<Integer> scores;
+  private Boolean active;
+  private Long createdAt;
+  private byte[] avatar;
 }

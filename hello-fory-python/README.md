@@ -35,8 +35,3 @@ pip install -r requirements.txt
 ```bash
 python main.py
 ```
-
-## Package Information
-
-- PyPI Package: [pyfory](https://pypi.org/project/pyfory/)
-- Current version in requirements.txt: pyfory>=0.4.1
